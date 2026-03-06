@@ -7,7 +7,12 @@
   };
 
   outputs =
-    { nixpkgs, systems, ... }:
+    {
+      self,
+      nixpkgs,
+      systems,
+      ...
+    }:
     let
       forSystems =
         attrs:
@@ -16,6 +21,7 @@
           attrs {
             inherit system;
             pkgs = nixpkgs.legacyPackages.${system};
+            ourPackages = self.legacyPackages.${system};
           }
         );
     in
@@ -23,5 +29,14 @@
       legacyPackages = forSystems ({ pkgs, ... }: import ./. { inherit pkgs; });
 
       formatter = forSystems ({ pkgs, ... }: pkgs.nixfmt-tree);
+
+      checks = forSystems (
+        { pkgs, ourPackages, ... }:
+        {
+          vencord = pkgs.callPackage ./checks/vencord.nix {
+            inherit (ourPackages) importPnpmLock iplConfigHook;
+          };
+        }
+      );
     };
 }
