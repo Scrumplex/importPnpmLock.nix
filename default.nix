@@ -3,4 +3,5 @@
 }:
 {
   importPnpmLock = pkgs.callPackage ./importPnpmLock.nix { };
+  iplConfigHook = pkgs.callPackage ./iplConfigHook.nix { };
 }
