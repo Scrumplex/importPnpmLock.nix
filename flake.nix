@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2026 Sefa Eyeoglu <contact@scrumplex.net>
+#
+# SPDX-License-Identifier: MIT
+
 {
   description = "A very basic flake";
 
@@ -26,9 +30,14 @@
         );
     in
     {
-      legacyPackages = forSystems ({ pkgs, ... }: import ./. { inherit pkgs; });
-
       formatter = forSystems ({ pkgs, ... }: pkgs.nixfmt-tree);
+      devShells = forSystems ({pkgs, ...}: {
+        default = pkgs.mkShell {
+          packages = with pkgs; [reuse];
+        };
+      });
+
+      legacyPackages = forSystems ({ pkgs, ... }: import ./. { inherit pkgs; });
 
       checks = forSystems (
         { pkgs, ourPackages, ... }:

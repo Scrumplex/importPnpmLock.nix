@@ -1,3 +1,8 @@
+# SPDX-FileCopyrightText: 2026 Sefa Eyeoglu <contact@scrumplex.net>
+# SPDX-FileCopyrightText: 2023-2026 nixpkgs Contributors
+#
+# SPDX-License-Identifier: MIT
+
 {
   fetchFromGitHub,
   git,
