@@ -19,6 +19,7 @@ stdenv.mkDerivation (finalAttrs: {
   };
 
   mitmCache = importPnpmLock {
+    inherit (finalAttrs) pname version;
     lockFile = "${finalAttrs.src}/pnpm-lock.yaml";
     manualEntries = {
       "gifenc@https://codeload.github.com/mattdesl/gifenc/tar.gz/64842fca317b112a8590f8fef2bf3825da8f6fe3" =

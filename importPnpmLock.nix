@@ -5,6 +5,8 @@
   mitm-cache,
 }:
 {
+  pname,
+  version,
   lockFile,
   manualEntries ? { },
 }:
@@ -12,8 +14,7 @@ let
   importYAML =
     file:
     let
-      # convert to json
-      json = runCommand "converted.json" { } ''
+      json = runCommand "${pname}-pnpm-lock.json" { } ''
         ${yj}/bin/yj < ${file} > $out
       '';
     in
@@ -60,6 +61,6 @@ let
     };
 in
 mitm-cache.fetch {
-  name = "npm-cache";
+  name = "${pname}-pnpm-mitm-cache-${version}";
   data = lib.mapAttrs' mapPackageToMitmCacheEntry data.packages;
 }
