@@ -31,11 +31,14 @@
     in
     {
       formatter = forSystems ({ pkgs, ... }: pkgs.nixfmt-tree);
-      devShells = forSystems ({pkgs, ...}: {
-        default = pkgs.mkShell {
-          packages = with pkgs; [reuse];
-        };
-      });
+      devShells = forSystems (
+        { pkgs, ... }:
+        {
+          default = pkgs.mkShell {
+            packages = with pkgs; [ reuse ];
+          };
+        }
+      );
 
       legacyPackages = forSystems ({ pkgs, ... }: import ./. { inherit pkgs; });
 
