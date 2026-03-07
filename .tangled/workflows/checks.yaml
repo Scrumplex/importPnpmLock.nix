@@ -9,3 +9,5 @@ engine: nixery
 steps:
   - name: "Flake check"
     command: "nix flake check -L"
+  - name: "Format"
+    command: "nix fmt -- --fail-on-change"
