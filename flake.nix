@@ -40,6 +40,8 @@
         }
       );
 
+      overlays.default = final: _: import ./. { pkgs = final; };
+
       legacyPackages = forSystems ({ pkgs, ... }: import ./. { inherit pkgs; });
 
       checks = forSystems (
