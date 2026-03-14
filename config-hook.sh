@@ -12,7 +12,6 @@ iplConfigHook() {
       exit 1
     fi
 
-    export HOME=$(mktemp -d)
     export npm_config_arch="@npmArch@"
     export npm_config_platform="@npmPlatform@"
 

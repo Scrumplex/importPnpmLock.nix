@@ -6,11 +6,13 @@
   makeSetupHook,
   stdenvNoCC,
   mitm-cache,
+  writableTmpDirAsHomeHook,
 }:
 makeSetupHook {
   name = "import-pnpm-lock-config-hook";
   propagatedBuildInputs = [
     mitm-cache
+    writableTmpDirAsHomeHook
   ];
   substitutions = {
     npmArch = stdenvNoCC.targetPlatform.node.arch;
