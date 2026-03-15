@@ -50,6 +50,9 @@
           vencord = pkgs.callPackage ./checks/vencord.nix {
             inherit (ourPackages) importPnpmLock iplConfigHook;
           };
+          reuse = pkgs.callPackage ./checks/reuse.nix {
+            inherit self;
+          };
         }
       );
     };
