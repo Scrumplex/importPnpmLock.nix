@@ -15,6 +15,10 @@
   manualEntries ? { },
 }:
 let
+  supportedLockFileVersions = [
+    "9.0"
+  ];
+
   importYAML =
     file:
     let
@@ -63,7 +67,24 @@ let
     lib.nameValuePair url {
       hash = integrity;
     };
+
+  lockFileVersion = data.lockfileVersion or null;
 in
+assert lib.assertMsg (lockFileVersion != null) ''
+  lockFile ${lockFile} does not look like a supported lock file.
+  Unable to read lock file version.
+'';
+assert lib.assertMsg (builtins.elem lockFileVersion supportedLockFileVersions) ''
+  File ${lockFile} is not a supported lock file.
+
+  Supported versions are ${lib.concatStrings supportedLockFileVersions}
+
+  Found version ${lockFileVersion}
+'';
+assert lib.assertMsg (data ? packages) ''
+  File ${lockFile} does not contain a list of locked packages.
+  Is it a valid lock file?
+'';
 mitm-cache.fetch {
   name = "${pname}-pnpm-mitm-cache-${version}";
   data = lib.mapAttrs' mapPackageToMitmCacheEntry data.packages;
