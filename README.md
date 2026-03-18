@@ -163,3 +163,9 @@ stdenv.mkDerivation (finalAttrs: {
   the whole lockfile, even if you just want to build a tiny component of a huge
   monorepo. On the other hand, there will only be a single cache for the whole
   monorepo! There may be ways to reduce the cache in the future.
+
+## Examples
+
+Take a look at [`checks/vencord.nix`](checks/vencord.nix) and
+[`checks/with-gyp/default.nix`](checks/with-gyp/default.nix) for some *real
+world* examples.
