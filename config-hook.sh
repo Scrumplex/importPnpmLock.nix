@@ -31,6 +31,7 @@ iplConfigHook() {
     runHook prePnpmInstall
 
     if ! pnpm install \
+        --reporter append-only \
         --ignore-scripts \
         "${pnpmInstallFlags[@]}" \
         --frozen-lockfile
