@@ -6,11 +6,14 @@
   self,
   reuse,
   runCommand,
-}: runCommand "ipl-check-reuse" {
-  nativeBuildInputs = [reuse];
-} ''
-  pushd "${self}"
-  reuse lint
-  popd
-  touch "$out"
-''
+}:
+runCommand "ipl-check-reuse"
+  {
+    nativeBuildInputs = [ reuse ];
+  }
+  ''
+    pushd "${self}"
+    reuse lint
+    popd
+    touch "$out"
+  ''
