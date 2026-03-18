@@ -128,6 +128,11 @@ stdenv.mkDerivation (finalAttrs: {
   buildPhase = ''
     runHook preBuild
 
+    # Optionally run install scripts of installed packages
+    # If scripts are only needed to run for the final package, consider using `pnpm deploy` in install phase instead
+    # --reporter append-only improves log output significantly
+    #  pnpm rebuild --pending --reporter append-only # --loglevel debug
+
     # or any other script
     pnpm run build
 

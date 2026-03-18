@@ -1,0 +1,14 @@
+{
+  "name": "with-gyp",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "packageManager": "pnpm@10.30.3",
+  "dependencies": {
+    "re2": "^1.23.3"
+  }
+}

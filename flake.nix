@@ -53,6 +53,9 @@
           reuse = pkgs.callPackage ./checks/reuse.nix {
             inherit self;
           };
+          with-gyp = pkgs.callPackage ./checks/with-gyp {
+            inherit (ourPackages) importPnpmLock iplConfigHook;
+          };
         }
       );
     };
