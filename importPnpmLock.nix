@@ -68,6 +68,9 @@ let
       hash = integrity;
     };
 
+  # directory resolution does not need any fetching
+  filterPackageEntry = _: package: (package.resolution or { }).type or null != "directory";
+
   lockFileVersion = data.lockfileVersion or null;
 in
 assert lib.assertMsg (lockFileVersion != null) ''
@@ -87,5 +90,5 @@ assert lib.assertMsg (data ? packages) ''
 '';
 mitm-cache.fetch {
   name = "${pname}-pnpm-mitm-cache-${version}";
-  data = lib.mapAttrs' mapPackageToMitmCacheEntry data.packages;
+  data = lib.mapAttrs' mapPackageToMitmCacheEntry (lib.filterAttrs filterPackageEntry data.packages);
 }
