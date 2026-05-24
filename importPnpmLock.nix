@@ -7,6 +7,7 @@
   runCommand,
   yj,
   mitm-cache,
+  config,
 }:
 {
   pname,
@@ -44,12 +45,25 @@ let
     else
       "https://registry.npmjs.org/${scopedName}/-/${packageName}-${version}.tgz";
 
+  applyMirrorToUrl =
+    url:
+    let
+      mUrl = builtins.match "(.+)://([^/]+)/(.+)" url;
+      scheme = builtins.elemAt mUrl 0;
+      host = builtins.elemAt mUrl 1;
+      path = builtins.elemAt mUrl 2;
+    in
+    if config.npmRegistryOverrides ? "${host}" then
+      "${scheme}://${config.npmRegistryOverrides."${host}"}/${path}"
+    else
+      url;
+
   data = importYAML lockFile;
 
   mapPackageToMitmCacheEntry =
     name: package:
     let
-      url = urlFromName name;
+      url = applyMirrorToUrl (urlFromName name);
       integrity = (package.resolution or { }).integrity or manualEntries.${name} or null;
     in
     assert lib.assertMsg (integrity != null) ''

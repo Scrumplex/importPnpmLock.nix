@@ -45,8 +45,25 @@
       legacyPackages = forSystems ({ pkgs, ... }: import ./. { inherit pkgs; });
 
       checks = forSystems (
-        { pkgs, ourPackages, ... }:
         {
+          pkgs,
+          ourPackages,
+          system,
+          ...
+        }:
+        let
+          pkgs' = import nixpkgs {
+            config.npmRegistryOverrides = {
+              "registry.npmjs.org" = "my-mirror.local/npm-registry";
+            };
+            inherit system;
+          };
+          ourPackages' = import ./. { pkgs = pkgs'; };
+        in
+        {
+          mirror = pkgs'.callPackage ./checks/mirror {
+            inherit (ourPackages') importPnpmLock;
+          };
           vencord = pkgs.callPackage ./checks/vencord.nix {
             inherit (ourPackages) importPnpmLock iplConfigHook;
           };
