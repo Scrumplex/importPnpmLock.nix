@@ -17,7 +17,7 @@ stdenv.mkDerivation (finalAttrs: {
   pname = "pnpm-test";
   inherit (pnpm_11) version;
 
-  src = "${path}/pkgs/test/pnpm/pnpm_11/src";
+  src = "${path}/pkgs/test/pnpm/pnpm_11_v4/src";
 
   mitmCache = importPnpmLock {
     inherit (finalAttrs) pname version;
