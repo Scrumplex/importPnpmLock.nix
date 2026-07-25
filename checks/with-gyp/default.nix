@@ -8,7 +8,7 @@
   lib,
   makeBinaryWrapper,
   nodejs,
-  pnpm_10,
+  pnpm_11,
   python3Minimal,
   stdenv,
   versionCheckHook,
@@ -27,7 +27,7 @@ stdenv.mkDerivation (finalAttrs: {
   nativeBuildInputs = [
     iplConfigHook
     nodejs
-    pnpm_10
+    pnpm_11
     python3Minimal
     makeBinaryWrapper
   ];
@@ -35,9 +35,6 @@ stdenv.mkDerivation (finalAttrs: {
   nativeInstallCheckInputs = [
     versionCheckHook
   ];
-
-  # node-gyp would otherwise struggle to find node headers
-  env.npm_config_nodedir = nodejs;
 
   dontBuild = true;
   doInstallCheck = true;
