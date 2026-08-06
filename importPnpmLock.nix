@@ -63,8 +63,9 @@ let
   mapPackageToMitmCacheEntry =
     name: package:
     let
-      url = applyMirrorToUrl (urlFromName name);
-      integrity = (package.resolution or { }).integrity or manualEntries.${name} or null;
+      resolution = package.resolution or { };
+      url = resolution.tarball or (applyMirrorToUrl (urlFromName name));
+      integrity = resolution.integrity or manualEntries.${name} or null;
     in
     assert lib.assertMsg (integrity != null) ''
       Package ${name} doesn't have an integrity entry.
