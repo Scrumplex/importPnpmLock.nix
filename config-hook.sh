@@ -44,6 +44,8 @@ iplConfigHook() {
     # See: https://pnpm.io/settings#packageimportmethod
     pnpm config set package-import-method clone-or-copy
 
+    pnpm config set reporter append-only
+
     # mitm-cache doesn't set a full URL and pnpm defaults to https. Force it to treat it as a plain text proxy
     pnpm config set https-proxy "http://$https_proxy"
 
