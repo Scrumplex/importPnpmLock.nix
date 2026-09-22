@@ -9,6 +9,13 @@ SPDX-License-Identifier: MIT
 Nix tooling to import `pnpm-lock.yaml`s so you can build reproducible Node.js
 packages without package manager regrets.
 
+> [!NOTE]
+> The primary repository lives on [tangled](https://tangled.org/scrumplex.net/importPnpmLock.nix).
+>
+> Available mirrors:
+> - [GitHub.com](https://github.com/Scrumplex/importPnpmLock.nix)
+> - [Codeberg](https://codeberg.org/Scrumplex/importPnpmLock.nix)
+
 ## Importing
 
 ### The flakey way
