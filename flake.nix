@@ -61,6 +61,9 @@
           ourPackages' = import ./. { pkgs = pkgs'; };
         in
         {
+          git-wt = pkgs'.callPackage ./checks/git-wt.nix {
+            inherit (ourPackages) importPnpmLock iplConfigHook;
+          };
           mirror = pkgs'.callPackage ./checks/mirror {
             inherit (ourPackages') importPnpmLock;
           };
@@ -71,6 +74,9 @@
             inherit self;
           };
           test-pnpm_11 = pkgs.callPackage ./checks/test-pnpm_11.nix {
+            inherit (ourPackages) importPnpmLock iplConfigHook;
+          };
+          test-pnpm_12 = pkgs.callPackage ./checks/test-pnpm_12.nix {
             inherit (ourPackages) importPnpmLock iplConfigHook;
           };
           with-gyp = pkgs.callPackage ./checks/with-gyp {

@@ -5,7 +5,7 @@
 {
   lib,
   runCommand,
-  yj,
+  yq-go,
   mitm-cache,
   config,
 }:
@@ -20,12 +20,17 @@ let
     "9.0"
   ];
 
-  importYAML =
+  importYAMLDocuments =
     file:
     let
-      json = runCommand "${pname}-pnpm-lock.json" { } ''
-        ${yj}/bin/yj < ${file} > $out
-      '';
+      json =
+        runCommand "${pname}-pnpm-lock.json"
+          {
+            nativeBuildInputs = [ yq-go ];
+          }
+          ''
+            yq --output-format json eval-all '[.]' ${file} > $out
+          '';
     in
     lib.importJSON json;
 
@@ -58,7 +63,9 @@ let
     else
       url;
 
-  data = importYAML lockFile;
+  documents = importYAMLDocuments lockFile;
+
+  data = lib.last documents;
 
   mapPackageToMitmCacheEntry =
     name: package:
